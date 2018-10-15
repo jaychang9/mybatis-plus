@@ -27,6 +27,8 @@ public class TemplateConfig {
 
     private String entity = ConstVal.TEMPLATE_ENTITY_JAVA;
 
+    private String dto = ConstVal.TEMPLATE_DTO_JAVA;
+
     private String entityKt = ConstVal.TEMPLATE_ENTITY_KT;
 
     private String service = ConstVal.TEMPLATE_SERVICE;
@@ -50,6 +52,16 @@ public class TemplateConfig {
 
     public TemplateConfig setEntity(String entity) {
         this.entity = entity;
+        return this;
+    }
+
+
+    public String getDto() {
+        return dto;
+    }
+
+    public TemplateConfig setDto(String dto){
+        this.dto = dto;
         return this;
     }
 
@@ -97,5 +109,4 @@ public class TemplateConfig {
         this.controller = controller;
         return this;
     }
-
 }

@@ -52,13 +52,13 @@ public class MybatisConfiguration extends Configuration {
      * 初始化调用
      */
     public MybatisConfiguration() {
-        setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
+        this.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
     }
 
     /**
      * 配置初始化
      */
-    public MybatisConfiguration init(GlobalConfig globalConfig) {
+    public void init(GlobalConfig globalConfig) {
         // 初始化 Sequence
         if (null != globalConfig.getWorkerId()
             && null != globalConfig.getDatacenterId()) {
@@ -69,9 +69,8 @@ public class MybatisConfiguration extends Configuration {
             System.out.println(" _ _   |_  _ _|_. ___ _ |    _ ");
             System.out.println("| | |\\/|_)(_| | |_\\  |_)||_|_\\ ");
             System.out.println("     /               |         ");
-            System.out.println("                        3.0.3  ");
+            System.out.println("                        3.0.5 ");
         }
-        return this;
     }
 
     /**

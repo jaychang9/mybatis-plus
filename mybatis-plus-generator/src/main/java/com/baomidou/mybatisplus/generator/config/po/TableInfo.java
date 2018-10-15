@@ -40,6 +40,7 @@ public class TableInfo {
     private String comment;
 
     private String entityName;
+    private String dtoName;
     private String mapperName;
     private String xmlName;
     private String serviceName;
@@ -111,6 +112,11 @@ public class TableInfo {
     public void setEntityName(String entityName) {
         this.entityName = entityName;
     }
+
+    public String getDtoName() { return dtoName; }
+
+    public void setDtoName(String dtoName){ this.dtoName = dtoName; }
+
 
     public void setEntityName(StrategyConfig strategyConfig, String entityName) {
         this.entityName = entityName;
@@ -234,5 +240,4 @@ public class TableInfo {
         }
         return fieldNames;
     }
-
 }

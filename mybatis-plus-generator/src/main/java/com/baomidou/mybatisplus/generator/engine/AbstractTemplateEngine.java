@@ -130,6 +130,14 @@ public abstract class AbstractTemplateEngine {
                         writer(objectMap, templateFilePath(template.getServiceImpl()), implFile);
                     }
                 }
+                // TODO MpDTO.java
+                if(null != tableInfo.getDtoName() && null != pathInfo.get(ConstVal.DTO_PATH)) {
+                    String dtoFile = String.format((pathInfo.get(ConstVal.DTO_PATH) + File.separator + tableInfo.getDtoName() + suffixJavaOrKt()), entityName);
+                    if(isCreate(FileType.DTO,dtoFile)){
+                        writer(objectMap,templateFilePath(template.getDto()),dtoFile);
+                    }
+                }
+
                 // MpController.java
                 if (null != tableInfo.getControllerName() && null != pathInfo.get(ConstVal.CONTROLLER_PATH)) {
                     String controllerFile = String.format((pathInfo.get(ConstVal.CONTROLLER_PATH) + File.separator + tableInfo.getControllerName() + suffixJavaOrKt()), entityName);

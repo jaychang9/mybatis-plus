@@ -44,6 +44,7 @@ public interface ConstVal {
     String MAPPER_PATH = "mapper_path";
     String XML_PATH = "xml_path";
     String CONTROLLER_PATH = "controller_path";
+    String DTO_PATH = "dto_path";
 
     String JAVA_TMPDIR = "java.io.tmpdir";
     String UTF8 = Charset.forName("UTF-8").name();
@@ -55,6 +56,8 @@ public interface ConstVal {
 
     String TEMPLATE_ENTITY_JAVA = "/templates/entity.java";
     String TEMPLATE_ENTITY_KT = "/templates/entity.kt";
+    String TEMPLATE_DTO_JAVA = "/templates/dto.java";
+    String TEMPLATE_DTO_KT = "/templates/dto.kt";
     String TEMPLATE_MAPPER = "/templates/mapper.java";
     String TEMPLATE_XML = "/templates/mapper.xml";
     String TEMPLATE_SERVICE = "/templates/service.java";
@@ -67,5 +70,6 @@ public interface ConstVal {
     String SUPER_MAPPER_CLASS = "com.baomidou.mybatisplus.core.mapper.BaseMapper";
     String SUPER_SERVICE_CLASS = "com.baomidou.mybatisplus.extension.service.IService";
     String SUPER_SERVICE_IMPL_CLASS = "com.baomidou.mybatisplus.extension.service.impl.ServiceImpl";
+
 
 }

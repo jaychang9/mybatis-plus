@@ -112,4 +112,8 @@ public enum DbType {
         }
         return OTHER;
     }
+
+    public String getDb() {
+        return db;
+    }
 }
