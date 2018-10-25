@@ -111,4 +111,24 @@ public @interface TableField {
      */
     boolean select() default true;
 
+    /**
+     * <p>
+     * 是否插入忽略
+     * </p>
+     * <p>
+     *     默认为false,即不忽略
+     * </p>
+     */
+    boolean insertIgnore() default false;
+
+    /**
+     * <p>
+     * 是否更新忽略
+     * </p>
+     * <p>
+     *     默认为false,即不忽略
+     * </p>
+     */
+    boolean updateIgnore() default false;
+
 }

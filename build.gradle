@@ -58,7 +58,7 @@ ext {
 
 allprojects {
     group = 'com.baomidou'
-    version = '3.0.6-SNAPSHOT'
+    version = '3.0.6rc'
 }
 
 description = "Mybatis 增强工具包 - 只做增强不做改变，简化CRUD操作"
@@ -78,6 +78,7 @@ configure(subprojects) {
     apply plugin: 'propdeps-maven'
     apply plugin: 'propdeps-idea'
     apply plugin: 'propdeps-eclipse'
+    apply plugin: 'maven-publish'
 }
 
 subprojects {
@@ -114,50 +115,21 @@ subprojects {
         from sourceSets.main.allSource
     }
 
-    javadoc {
-        options {
-            encoding "UTF-8"
-            charSet 'UTF-8'
-            author true
-            version true
-            failOnError false
-            links "http://docs.oracle.com/javase/8/docs/api"
-        }
-    }
-
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        classifier = 'javadoc'
-        from 'build/docs/javadoc'
-    }
-
     artifacts {
         archives sourcesJar
-        archives javadocJar
     }
-
-    tasks.whenTaskAdded { task ->
-        if (task.name.contains('uploadArchives') || task.name.contains("signArchives")) {
-            task.enabled = new File(project.property('signing.secretKeyRingFile') as String).isFile()
-        }
-    }
-
-    signing {
-        sign configurations.archives
-    }
-
     // gradle clean build uploadArchives -Dun=用户名 -Dps=密码 -x test
     uploadArchives {
         repositories {
             mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
                 def userName = System.getProperty("un")
                 def passWord = System.getProperty("ps")
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                repository(url: "http://10.1.10.240:8081/nexus/content/repositories/zcckj_releases/") {
                     //noinspection GroovyAssignabilityCheck
                     authentication(userName: userName, password: passWord)
                 }
 
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                snapshotRepository(url: "http://10.1.10.240:8081/nexus/content/repositories/zcckj_snapshots/") {
                     //noinspection GroovyAssignabilityCheck
                     authentication(userName: userName, password: passWord)
                 }
@@ -165,36 +137,6 @@ subprojects {
                 pom.version = "$project.version"
                 pom.artifactId = "$project.name"
                 pom.groupId = "$project.group"
-                pom.project {
-                    //noinspection GroovyAssignabilityCheck
-                    name 'mybatis-plus'
-                    packaging 'jar'
-                    description 'An enhanced toolkit of Mybatis to simplify development.'
-                    url 'https://github.com/baomidou/mybatis-plus'
-
-                    scm {
-                        connection 'scm:git@github.com:Codearte/gradle-nexus-staging-plugin.git'
-                        developerConnection 'scm:git@github.com:Codearte/gradle-nexus-staging-plugin.git'
-                        url 'https://github.com/baomidou/mybatis-plus'
-                    }
-
-                    licenses {
-                        license {
-                            //noinspection GroovyAssignabilityCheck
-                            name 'The Apache License, Version 2.0'
-                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'baomidou'
-                            //noinspection GroovyAssignabilityCheck
-                            name 'hubin'
-                            email 'jobob@qq.com'
-                        }
-                    }
-                }
             }
         }
     }

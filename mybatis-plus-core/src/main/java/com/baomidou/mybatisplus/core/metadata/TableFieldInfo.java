@@ -43,6 +43,16 @@ public class TableFieldInfo {
      * true: 表示要进行 as
      */
     private boolean related;
+
+    /**
+     * 插入忽略
+     */
+    private boolean insertIgnore = false;
+
+    /**
+     * 更新忽略
+     */
+    private boolean updateIgnore = false;
     /**
      * 是否进行 select 查询
      * 大字段可设置为 false 不加入 select 查询范围
@@ -107,8 +117,8 @@ public class TableFieldInfo {
      * 存在 TableField 注解时, 使用的构造函数
      * </p>
      */
-    public TableFieldInfo(GlobalConfig.DbConfig dbConfig, TableInfo tableInfo, Field field,
-                          String column, String el, TableField tableField) {
+    public TableFieldInfo(GlobalConfig.DbConfig dbConfig, TableInfo tableInfo, Field field, String column, String el,
+        TableField tableField) {
         this.property = field.getName();
         this.propertyType = field.getType();
         this.isCharSequence = StringUtils.isCharSequence(this.propertyType);
@@ -117,6 +127,8 @@ public class TableFieldInfo {
         this.update = tableField.update();
         this.el = el;
         tableInfo.setLogicDelete(this.initLogicDelete(dbConfig, field));
+        this.insertIgnore = tableField.insertIgnore();
+        this.updateIgnore = tableField.updateIgnore();
 
         if (StringUtils.isEmpty(tableField.value())) {
             if (tableInfo.isUnderCamel()) {
@@ -246,6 +258,9 @@ public class TableFieldInfo {
      * @return sql 脚本片段
      */
     public String getInsertSqlProperty() {
+        if(insertIgnore){
+            return StringPool.EMPTY;
+        }
         String sqlScript = SqlScriptUtils.safeParam(el) + StringPool.COMMA;
         if (fieldFill == FieldFill.INSERT || fieldFill == FieldFill.INSERT_UPDATE) {
             return sqlScript;
@@ -261,6 +276,9 @@ public class TableFieldInfo {
      * @return sql 脚本片段
      */
     public String getInsertSqlColumn() {
+        if(insertIgnore){
+            return StringPool.EMPTY;
+        }
         String sqlScript = column + StringPool.COMMA;
         if (fieldFill == FieldFill.INSERT || fieldFill == FieldFill.INSERT_UPDATE) {
             return sqlScript;
@@ -275,6 +293,9 @@ public class TableFieldInfo {
      * @return sql 脚本片段
      */
     public String getSqlSet(final String prefix) {
+        if(updateIgnore){
+            return StringPool.EMPTY;
+        }
         String newPrefix = prefix == null ? StringPool.EMPTY : prefix;
         // 默认: column=
         String sqlSet = column + StringPool.EQUALS;
@@ -317,8 +338,8 @@ public class TableFieldInfo {
             return sqlScript;
         }
         if (fieldStrategy == FieldStrategy.NOT_EMPTY && isCharSequence) {
-            return SqlScriptUtils.convertIf(sqlScript, String.format("%s != null and %s != ''", property, property),
-                false);
+            return SqlScriptUtils
+                .convertIf(sqlScript, String.format("%s != null and %s != ''", property, property), false);
         }
         return SqlScriptUtils.convertIf(sqlScript, String.format("%s != null", property), false);
     }
