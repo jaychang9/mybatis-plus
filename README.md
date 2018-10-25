@@ -73,12 +73,6 @@ Mybatis 增强工具包 - 只做增强不做改变，简化`CRUD`操作
 
 ![项目结构说明](http://git.oschina.net/uploads/images/2016/0821/161516_58956b85_12260.png "项目结构说明")
 
-# 其他开源项目 | Other Project
-
-- [基于Cookie的SSO中间件 Kisso](http://git.oschina.net/baomidou/kisso)
-- [Java快速开发框架 SpringWind](http://git.oschina.net/juapk/SpringWind)
-- [基于Hibernate扩展 Hibernate-Plus](http://git.oschina.net/baomidou/hibernate-plus)
-
 # 期望 | Futures
 
 > 欢迎提出更好的意见，帮助完善 Mybatis-Plus
